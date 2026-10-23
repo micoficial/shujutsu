@@ -1,0 +1,58 @@
+name: build-and-deploy
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['data/summary.json', '**.md']
+  schedule:
+    - cron: '30 19 * * 0' # 毎週月曜 4:30（日本時間）に作り直す（新しい年度のデータが出ていればそれを使う）
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: 公開データを取得
+        run: bash scripts/fetch.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: サイトを作る
+        run: node scripts/build.mjs
+        env:
+          SITE_ORIGIN: https://micoficial.github.io
+          SITE_BASE: /shujutsu/
+      - name: 更新の記録を残す
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/summary.json
+          git diff --cached --quiet || git commit -m "データ更新 $(date -u +%Y-%m-%d)"
+          git push || echo "記録のpushは省略"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

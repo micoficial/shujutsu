@@ -1,0 +1,12 @@
+{
+  "name": "shujutsu-shirabe",
+  "private": true,
+  "type": "module",
+  "description": "手術件数しらべ：病院ごとの手術件数・入院患者数を厚生労働省のDPC公開データから見られる静的サイト",
+  "scripts": {
+    "fetch": "bash scripts/fetch.sh",
+    "build": "node scripts/build.mjs",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
