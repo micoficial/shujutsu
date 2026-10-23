@@ -60,7 +60,7 @@
       rows = search(input.value, 8);
       box.innerHTML = rows.length
         ? rows.map((r, i) => `<a href="${url(r)}"${i === sel ? ' class="on"' : ''}>${esc(label(r))}<small>${esc(meta(r))}</small></a>`).join('')
-        : '<div class="sb-none">見つかりませんでした。法人名を外したり、名前の一部だけで探してください。</div>';
+        : '<div class="sb-none">見つかりませんでした。名前の一部を漢字で入れてください（例：「聖路加」「済生会」）。ひらがなの読みでは探せません。</div>';
       box.hidden = false;
     };
     input.addEventListener('focus', () => { load().then(() => input.value && render()); });

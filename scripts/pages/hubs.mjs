@@ -150,7 +150,7 @@ export function renderSearch() {
 <div class="sb-r" hidden></div>
 </form>
 <div id="results" class="sec"></div>
-<p class="note">ひらがな・カタカナ、法人名の有無はゆるく照らし合わせます。病院名の一部（例：「済生会」「赤十字」）でも探せます。</p>`;
+<p class="note">病院名の一部を漢字で入れてください（例：「済生会」「赤十字」）。カタカナとひらがな、法人名の有無はゆるく照らし合わせますが、漢字の名前をひらがなの読みで探すことはできません。</p>`;
   return layout({ title: `病院を検索｜${SITE_NAME}`, description: `病院名から、手術件数・入院患者数のページを探せます。`, path: 'search/', body, ld: [bc.ld], noindex: true });
 }
 

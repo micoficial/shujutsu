@@ -15,7 +15,7 @@ LOG=data/refresh.log
   export GH_TOKEN
   if [ "${1:-}" = "--check" ]; then
     command -v node tar gh
-    code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "https://www.mhlw.go.jp/stf/shingi/shingi-chuo.html?tid=128164")
+    code=$(curl -sL -o /dev/null -w "%{http_code}" --max-time 30 "https://www.mhlw.go.jp/stf/shingi/shingi-chuo.html?tid=128164")
     echo "厚労省の応答: $code"
     gh release view data-latest -R micoficial/shujutsu --json assets --jq '.assets[] | "控え: \(.name) \(.size) \(.updatedAt)"'
     echo "=== 確認だけ（データは更新していません）"
