@@ -136,7 +136,7 @@ function relatedTopics(ctx, t, pref) {
 
 export function renderTopic(ctx, t, pref = null) {
   const fy = fyText();
-  const name = topicTitleName(t);
+  const name = t.name; // 見出し・タイトルは短い名前（説明つきの名前は一覧で使う）
   const word = metricWord(t);
   const rows = pref ? t.byPref.get(pref.code) || [] : t.listed.slice(0, NAT_LIMIT);
   const top = rows[0];
@@ -157,12 +157,12 @@ export function renderTopic(ctx, t, pref = null) {
   const tableH = pref ? `${esc(pref.name)}の病院（${esc(mainLabel)}の多い順）` : `${esc(mainLabel)}の多い病院（全国 上位${Math.min(NAT_LIMIT, rows.length)}）`;
   const notes = `<section class="card"><h2>このページの数字について</h2><ul class="ul">
 <li>対象：国のDPC調査に参加した病院（DPC対象病院、DPC準備病院、データを提出している出来高算定病院）を${esc(periodText())}に退院した患者です。入院した病院の所在地で数えています（患者の住所ではありません）。</li>
-<li>入院が1日以内の患者、入院から24時間以内に亡くなった患者、臓器移植を受けた患者、自費の患者などは国の集計の対象外です。${t.note ? esc(t.note) : ''}</li>
+<li>入院が1日以内の患者、入院から24時間以内に亡くなった患者、臓器移植を受けた患者、自費の患者などは国の集計の対象外です。</li>
 <li>病院ごとの件数は、10件未満の区分が「－」で伏せられています。このため、件数が10件に満たない病院は一覧に出ないことがあります。</li>
 <li>手術の件数は「その手術を受けて退院した患者の数」です（同じ入院で同じ区分の手術を2回受けても1件）。</li>
 </ul></section>`;
   const body = `${bc.html}
-<header class="ph"><p class="eyebrow">${esc(fy)}・国のDPC公開データ</p><h1>${esc(h1)}</h1><p class="lead">${lead}</p></header>
+<header class="ph"><p class="eyebrow">${esc(fy)}・国のDPC公開データ</p><h1>${esc(h1)}</h1><p class="lead">${lead}</p>${t.note ? `<p class="official">${esc(t.note)}</p>` : ''}</header>
 ${caution('rank')}
 ${kpis}
 <section class="sec"><h2>${tableH}</h2>${table}</section>
