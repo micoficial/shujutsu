@@ -1,0 +1,23 @@
+{
+  "built": "2026年10月23日",
+  "base": "/shujutsu/",
+  "report": "令和6年度DPCの評価・検証等に係る調査「退院患者調査」の結果報告について",
+  "reportUrl": "https://www.mhlw.go.jp/stf/shingi2/newpage_00203.html",
+  "notes": [
+    "※一部病院の告示番号に誤りがあったため、データ差替え（令和8年6月30日）"
+  ],
+  "period": {
+    "from": "2024年6月",
+    "to": "2025年5月",
+    "fy": 2024
+  },
+  "tree": "令和8年5月19日更新",
+  "pages": 12538,
+  "bytes": 288730708,
+  "hospitals": 4485,
+  "indexedHospitals": 3709,
+  "allHospitals": 6370,
+  "diseases": 326,
+  "topics": 48,
+  "patients": 11745743
+}
